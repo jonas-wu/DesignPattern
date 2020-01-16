@@ -49,7 +49,7 @@ class Main {
     fun builderDemo() {
         Computer.Builder()
             .setCpu("amd")
-            .setMainboard("ABC")
+            .setMainBoard("ABC")
             .build().show()
     }
 

@@ -12,7 +12,7 @@ class Computer private constructor() {
             return this
         }
 
-        fun setMainboard(mainBoard: String): Builder {
+        fun setMainBoard(mainBoard: String): Builder {
             computer.mainBoard = mainBoard
             return this
         }
