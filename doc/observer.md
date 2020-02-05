@@ -19,3 +19,63 @@
 | Subject(目标)  | 目标知道它的观察者。可以有任意多个观察者观察同一个目标。 <br/>  提供注册和删除观察者对象的接口。<br/> 为那些在目标发生改变时需获得通知的对象定义一个更新接口 |
 | ConcreteSubject(具体目标)  | 将有关状态存入各ConcreteObserver对象。<br/> 当它的状态发生改变时 , 向它的各个观察者发出通知。 |
 | ConcreteObserver(具体观察者)  | 维护一个指向ConcreteSubject对象的引用。<br/> 存储有关状态,这些状态应与目标的状态保持一致。<br/> 实现Observer的更新接口以使自身状态与目标的状态保持一致。  |
+
+## 代码
+```
+interface Observer {
+    fun update(data: String)
+}
+
+class ObserverA : Observer {
+    override fun update(data: String) {
+        println("ObserverA update $data")
+    }
+}
+
+class ObserverB : Observer {
+    override fun update(data: String) {
+        println("ObserverB update $data")
+    }
+}
+
+interface Subject {
+    fun registerListener(observer: Observer)
+    fun removeListener(observer: Observer)
+    fun notify(observer: Observer)
+    fun notifyAllObservers()
+}
+
+class SubjectImpl(var data: String) : Subject {
+    private val observers: MutableList<Observer> = mutableListOf()
+
+    override fun registerListener(observer: Observer) {
+        if (!observers.contains(observer))
+            observers.add(observer)
+    }
+
+    override fun removeListener(observer: Observer) {
+        if (observers.contains(observer))
+            observers.remove(observer)
+    }
+
+    override fun notify(observer: Observer) {
+        observer.update(data)
+    }
+
+    override fun notifyAllObservers() {
+        observers.forEach { it.update(data) }
+    }
+}
+
+fun observerDemo() {
+    val subject = SubjectImpl("hello")
+
+    val observerA = ObserverA()
+    subject.registerListener(observerA)
+    subject.notify(observerA)
+
+    val observerB = ObserverB()
+    subject.registerListener(observerB)
+    subject.notifyAllObservers()
+}
+```

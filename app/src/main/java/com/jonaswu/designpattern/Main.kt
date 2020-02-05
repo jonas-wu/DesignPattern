@@ -10,9 +10,7 @@ import com.jonaswu.designpattern.factory.FactoryB
 import com.jonaswu.designpattern.observer.ObserverA
 import com.jonaswu.designpattern.observer.ObserverB
 import com.jonaswu.designpattern.observer.SubjectImpl
-import com.jonaswu.designpattern.prototype.ProductA
-import com.jonaswu.designpattern.prototype.ProductB
-import com.jonaswu.designpattern.prototype.ProductManager
+import com.jonaswu.designpattern.prototype.RealProduct
 import com.jonaswu.designpattern.proxy.MyProxy
 import com.jonaswu.designpattern.singleton.MySingleton
 
@@ -21,7 +19,7 @@ class Main {
         @JvmStatic
         fun main(vararg args: String) {
             val obj = Main()
-            obj.observerDemo()
+            obj.prototypeDemo()
         }
     }
 
@@ -35,15 +33,13 @@ class Main {
     }
 
     fun prototypeDemo() {
-        val manager = ProductManager()
-        manager.register("product-a", ProductA())
-        manager.register("product-b", ProductB())
+        val product1 = RealProduct()
+        product1.desc = "this is product1"
+        product1.show()
 
-        val p = manager.create("product-a")
-        p?.show()
-
-        val p2 = manager.create("product-b")
-        p2?.show()
+        val product2 = product1.copy()
+        product2.desc = "this is product2"
+        product2.show()
     }
 
     fun builderDemo() {

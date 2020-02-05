@@ -18,3 +18,51 @@
 | 具体产品（Concrete Product） | 抽象产品的子类；工厂类创建的目标类 | 描述生产的具体产品 |
 | 抽象工厂（Creator） | 具体工厂的父类 | 描述具体工厂的公共接口 |
 | 具体工厂（Concrete Creator） | 抽象工厂的子类；被外界调用 | 描述具体工厂；实现FactoryMethod工厂方法创建产品的实例 |
+
+## 代码
+```
+interface Product {
+    fun show()
+}
+
+class ProductA : Product {
+    companion object {
+        private const val TAG = "ProductA"
+    }
+
+    override fun show() {
+        println("$TAG show")
+    }
+}
+
+class ProductB : Product {
+    companion object {
+        private const val TAG = "ProductB"
+    }
+
+    override fun show() {
+        println("$TAG show")
+    }
+}
+
+interface Factory {
+    fun create(): Product
+}
+
+object FactoryA : Factory {
+    override fun create(): Product {
+        return ProductA()
+    }
+}
+
+object FactoryB : Factory {
+    override fun create(): Product {
+        return ProductB()
+    }
+}
+
+fun factoryDemo() {
+    FactoryA.create().show()
+    FactoryB.create().show()
+}
+```
